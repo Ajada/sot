@@ -34,11 +34,15 @@ export default ({
   }
   ::-webkit-scrollbar {
     width: 2px;
+    height: 2px;
   }
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
+    ::-webkit-resizer{
+      color: red;
+    }
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888;

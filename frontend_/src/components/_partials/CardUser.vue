@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .cards{
   margin: 2px;
   button{ }

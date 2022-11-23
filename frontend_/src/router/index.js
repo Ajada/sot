@@ -20,7 +20,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "team" */ '../views/TeamView.vue')
   },
   {
-    path: '/create-new-team',
+    path: '/my-team/create-new-team',
     name: 'add-team',
     component: () => import('@/components/layouts/team/actions/RegisterNewTeam.vue')
   },

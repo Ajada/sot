@@ -16,18 +16,6 @@
             <option value="1">NBR 14276 / Brigada Emergência - Combate Básico/ Avançado</option>
             <option value="2">NBR 14276 / Brigada Emergência - Primeiros Socorros</option>
             <option value="3">NBR 14276 / Brigada Emergência - Resgate </option>
-            <option value="4">Primeiros Socorros - Avançado</option>
-            <option value="5">NR-10 / Segurança em Instalação em Serviços e Eletricidade</option>
-            <option value="6">NR-10 / SEP</option>
-            <option value="7">NR-11 / Direção Defensiva</option>
-            <option value="8">NR-11 / Operação de BobCat</option>
-            <option value="9">NR-11 / Operação de Empilhadeiras</option>
-            <option value="10">NR-11 / Operação de Empilhadeiras, Guindastes</option>
-            <option value="11">NR-11 / Operação de Talhas e Pontes Rolantes</option>
-            <option value="12">NR-11 / Operações Pá Carregadeira, Guindastes</option>
-            <option value="13">NR-11 / Operações Pá Carregadeira, Guindastes</option>
-            <option value="14">NR-11 / Operações Pá Carregadeira, Guindastes</option>
-            <option value="15">NR-11 / Operação de Pá Carregadeira</option>
           </select>
         </div>
         <div class="col-md-4 mt-3 w-100">
@@ -39,13 +27,28 @@
             </span>
           </label>
         </div>
-        <div class="mt-3">
-          <select class="form-select">
-            <option selected>Selecione o Treinamento</option>
-            <option value="1">NBR 14276 / Brigada Emergência - Combate Básico/ Avançado</option>
-            <option value="2">NBR 14276 / Brigada Emergência - Primeiros Socorros</option>
-            <option value="3">NBR 14276 / Brigada Emergência - Resgate </option>
-          </select>
+        <div class="dropdown mt-3">
+          <button class="btn btn-outline-secondary w-100 text-start dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Selecione os Participantes
+          </button>
+          <div>
+            <ul class="dropdown-menu w-100">
+              <li>
+                <AllEmployees v-for="(item, index) in employee" :key="index" :employee="item" @employeeData="selectEmployee"/>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-container w-100 mh-4">
+          <main class="container-sm">
+            <section class="cards">
+              <div class="cards-content py-1">
+                <div class="row w-100">
+                  <CardEmployee v-for="(value, key) in employessSelected" :key="key" :employee="value" />
+                </div>
+              </div>
+            </section>
+          </main>
         </div>
         <div class="d-flex mt-5 justify-content-end">
           <input type="submit" class="btn btn-outline-secondary m-1 shadow-sm" @click="$router.back()" value="Voltar"/>
@@ -57,15 +60,45 @@
 </template>
 
 <script>
-export default {
+import AllEmployees from '../_patials/AllEmployees.vue'
+import CardEmployee from './../_patials/CardUsersSelected.vue'
 
+export default {
+  components: {
+    AllEmployees,
+    CardEmployee
+  },
+  data () {
+    return {
+      employessSelected: [],
+      employee: [
+        { name: 'Artenilson', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team1.jpg' },
+        { name: 'Astolfosanderson', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team2.jpg' }
+      ]
+    }
+  },
+  methods: {
+    selectEmployee (employee) {
+      this.employessSelected.push(employee)
+    }
+  },
+  created () {
+  }
 }
 </script>
 
 <style lang="scss">
-option{
-  max-height: 1px;
+.mh-4{
+  max-height: 45vh;
   overflow: auto;
+}
+
+select{
+  cursor: pointer;
+  option{
+    max-height: 1px;
+    overflow: auto;
+  }
 }
 
 .btn-tertiary {
