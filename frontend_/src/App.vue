@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div id="app">
     <MenuNav />
     <transition name="slide" mode="out-in">
@@ -28,6 +28,9 @@ export default ({
   }
   .w-20{
     width: 23%;
+  }
+  .w-87{
+    width: 87%;
   }
   .text-grey{
     color: rgba(107, 107, 107, 0.352);

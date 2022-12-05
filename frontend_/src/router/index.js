@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  /* HOME VIEWS */
   {
     path: '/',
     name: 'home',
@@ -14,20 +15,24 @@ const routes = [
     name: 'add-employee',
     component: () => import('@/components/layouts/home/AddNewEmployee.vue')
   },
+
+  /* TEAM VIEWS */
   {
     path: '/my-team',
     name: 'team-group',
     component: () => import(/* webpackChunkName: "team" */ '../views/TeamView.vue')
   },
   {
-    path: '/my-team/create-new-team',
+    path: '/create-new-team',
     name: 'add-team',
     component: () => import('@/components/layouts/team/actions/RegisterNewTeam.vue')
   },
+
+  /* TRAINING VIEWS */
   {
     path: '/training/',
     name: 'trainings-register',
-    component: () => import('@/views/TrainingView.vue')
+    component: () => import('../views/TrainingView.vue')
   },
   {
     path: '/training/create',

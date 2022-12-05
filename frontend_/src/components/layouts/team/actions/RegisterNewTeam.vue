@@ -9,7 +9,7 @@
       </h3>
     </div>
     <div class="d-flex justify-content-center">
-      <form class="w-75 p-2" method="post" enctype="multipart/form-data">
+      <form class="w-75 p-2" enctype="multipart/form-data">
         <div>
           <select class="form-select" aria-label="Default select example">
             <option selected>Selecione o Treinamento</option>
@@ -50,18 +50,18 @@
             </section>
           </main>
         </div>
-        <div class="d-flex mt-5 justify-content-end">
-          <input type="submit" class="btn btn-outline-secondary m-1 shadow-sm" @click="$router.back()" value="Voltar"/>
-          <input type="submit" class="btn btn-outline-primary m-1 shadow-sm" value="Registrar Turma"/>
-        </div>
       </form>
+    </div>
+    <div class="w-87 d-flex mt-5 justify-content-end">
+      <input type="submit" class="btn btn-outline-secondary m-1 shadow-sm" @click="$router.back()" value="Voltar"/>
+      <input type="submit" class="btn btn-outline-primary m-1 shadow-sm" @click.prevent="create" value="Registrar Turma"/>
     </div>
   </div>
 </template>
 
 <script>
-import AllEmployees from '../_patials/AllEmployees.vue'
-import CardEmployee from './../_patials/CardUsersSelected.vue'
+import AllEmployees from '../_partials/AllEmployees.vue'
+import CardEmployee from './../_partials/CardUsersSelected.vue'
 
 export default {
   components: {
@@ -80,6 +80,9 @@ export default {
   methods: {
     selectEmployee (employee) {
       this.employessSelected.push(employee)
+    },
+    create () {
+      return console.log(this.employessSelected)
     }
   },
   created () {
