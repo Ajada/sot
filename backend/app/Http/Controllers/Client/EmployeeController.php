@@ -43,16 +43,9 @@ class EmployeeController extends Controller
      */
     public function show($param)
     {
-        dd($param);
+        $collect = DB::table('employees')->where('user_id', session('user_id'))->where('name', 'like', '%'.$param.'%')->orWhere(function($query)use($param){$query->where('user_id', session('user_id'))->where('cpf', 'like', '%'.$param.'%');})->orWhere(function($query)use($param){$query->where('user_id', session('user_id'))->where('function', 'like', '%'.$param.'%');})->get();
 
-        $collect = DB::table('employees')
-        ->whereUserId(session('user_id'))
-        ->whereName('like', '%'.$param.'%')
-        ->orWhere('cpf', 'like', '%'.$param.'%')
-        ->orWhere('function', 'like', '%'.$param.'%')
-        ->get();
-
-        return $collect ? response()->json($collect) : response()->json(['error' => 'Equipment not found']);
+        return $collect ? response()->json($collect) : response()->json(['error' => 'Employee not found']);
     }
 
     /**

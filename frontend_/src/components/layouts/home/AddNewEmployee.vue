@@ -60,28 +60,21 @@
           </div>
         </div>
 
-        <div class="input-group mb-3">
-          <input
-            type="file"
-            class="form-control"
-            ref="file"
-          />
-          <label class="input-group-text" for="inputGroupFile02"
-            ><i class="fa-solid fa-magnifying-glass"></i
-          ></label>
-        </div>
-
         <div class="col-md-4 mb-3 w-100">
           <input
             type="file"
             class="input-file"
-            id="file_certified"
-            ref="certified"
+            id="photo"
+            ref="employee_photo"
+            @change="gocthaNameImage()"
           />
-          <label for="file_certified" class="btn btn-tertiary js-labelFile border border-dark">
+          <label
+            for="photo"
+            class="btn btn-tertiary js-labelFile border border-dark"
+          >
             <i class="icon fa fa-check"></i>
             <span style="padding-left: 10px" class="js-fileName">
-                Certificado do Aparelho
+              Foto do Funcionario
             </span>
           </label>
         </div>
@@ -91,7 +84,7 @@
             <label for="validationDefault03">Observações:</label>
             <textarea
               class="form-control"
-              placeholder="Equipamento com possivel..."
+              placeholder="Observações sobre o funcionario"
             ></textarea>
           </div>
         </div>
@@ -115,7 +108,23 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      employeeData: {
+        name: '',
+        cpf: '',
+        function: '',
+        photo: undefined,
+        observation: ''
+      }
+    }
+  },
+  methods: {
+    gocthaNameImage () {
+      this.employeeData.photo = this.$refs.employee_photo.files[0]
+      return console.log(this.employeeData.photo)
+    }
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <button @click.prevent="getEmployee" class="dropdown-item">
-    {{ employee.name }}
+    {{ employee.name }} - {{ employee.function }}
   </button>
 </template>
 

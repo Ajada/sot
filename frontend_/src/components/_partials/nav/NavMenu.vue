@@ -9,19 +9,19 @@
       <div class="collapse navbar-collapse p-0" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'home' }">
-              <i class="fa-solid fa-house"></i>
+            <router-link class="underlineHover nav-link" :to="{ name: 'home' }">
+              <i id="user-icon" class="fa-solid fa-house"></i>
               Inicio
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'team-group' }">
+            <router-link class="underlineHover nav-link" :to="{ name: 'team-group' }">
               <i class="fa-solid fa-people-group"></i>
               Turmas
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'trainings-register' }">
+            <router-link class="underlineHover nav-link" :to="{ name: 'trainings-register' }">
               <i class="fa-solid fa-chalkboard-user"></i>
               Treinamentos
             </router-link>
@@ -41,6 +41,24 @@ export default {
 <style scoped lang="scss">
 .bg-marine{
   background-color: rgb(8, 8, 59);
+}
+.underlineHover{
+  &:after {
+    display: block;
+    left: 0;
+    bottom: -10px;
+    width: 0;
+    height: 2px;
+    background-color: #56baed;
+    content: "";
+    transition: width 0.2s;
+  }
+  &:hover {
+    color: #0d0d0d;
+    &:after{
+      width: 100%;
+    }
+  }
 }
 nav {
   color: black;

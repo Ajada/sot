@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import TeamCard from '@/components/_partials/CardTeam.vue'
-import TeamModal from '@/components/_partials/ModalCardTeam.vue'
+import TeamCard from '@/components/_partials/card/CardTeam.vue'
+import TeamModal from '@/components/_partials/modals/ModalCardTeam.vue'
 
 export default {
   components: {

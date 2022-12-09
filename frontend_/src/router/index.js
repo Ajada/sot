@@ -4,11 +4,35 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  /* LOGIN */
+  {
+    path: '/login',
+    name: 'login-view',
+    component: () => import('@/views/LoginView.vue'),
+    children: [
+      {
+        path: 'signin',
+        name: 'login-signin',
+        component: () => import('@/components/layouts/login/SignUp.vue')
+      },
+      {
+        path: 'signup',
+        name: 'login-signup',
+        component: () => import('@/components/layouts/login/SignUp.vue')
+      },
+      {
+        path: 'forgot-password',
+        name: 'login-forgot',
+        component: () => import('@/components/layouts/login/Forgot.vue')
+      }
+    ]
+  },
   /* HOME VIEWS */
   {
-    path: '/',
+    path: '/home',
+    alias: '/',
     name: 'home',
-    component: () => import('../views/HomeView.vue')
+    component: () => import('../views/app/HomeView.vue')
   },
   {
     path: '/employes/create-employee',
@@ -20,7 +44,7 @@ const routes = [
   {
     path: '/my-team',
     name: 'team-group',
-    component: () => import(/* webpackChunkName: "team" */ '../views/TeamView.vue')
+    component: () => import(/* webpackChunkName: "team" */ '../views/app/TeamView.vue')
   },
   {
     path: '/create-new-team',
@@ -32,7 +56,7 @@ const routes = [
   {
     path: '/training/',
     name: 'trainings-register',
-    component: () => import('../views/TrainingView.vue')
+    component: () => import('../views/app/TrainingView.vue')
   },
   {
     path: '/training/create',

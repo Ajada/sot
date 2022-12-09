@@ -12,4 +12,15 @@ class FormedTeamsModel extends Model
 
     protected $table = 'formed_teams';
 
+    protected $fillable = [
+        'user_id',
+        'training_name',
+        'instructor',
+        'category',
+        'realization',
+        'valid_until',
+        'attendance_list',
+        'certificates',
+    ];
+
 }

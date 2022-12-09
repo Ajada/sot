@@ -13,13 +13,11 @@
         <div>
           <select class="form-select" aria-label="Default select example">
             <option selected>Selecione o Treinamento</option>
-            <option value="1">NBR 14276 / Brigada Emergência - Combate Básico/ Avançado</option>
-            <option value="2">NBR 14276 / Brigada Emergência - Primeiros Socorros</option>
-            <option value="3">NBR 14276 / Brigada Emergência - Resgate </option>
+            <option v-for="(item, index) in $store.state.trainings" :key="index" :value="item.id">{{ item.name }}</option>
           </select>
         </div>
         <div class="col-md-4 mt-3 w-100">
-          <input type="file" class="input-file" id="file_certified" ref="certified" />
+          <input type="file" class="input-file" id="file_certified" ref="certified" multiple @change="setCertifiedList()"/>
           <label for="file_certified" class="btn btn-tertiary js-labelFile border border-dark">
             <i class="icon fa fa-check"></i>
             <span style="padding-left: 10px" class="js-fileName">
@@ -44,7 +42,7 @@
             <section class="cards">
               <div class="cards-content py-1">
                 <div class="row w-100">
-                  <CardEmployee v-for="(value, key) in employessSelected" :key="key" :employee="value" />
+                  <CardEmployee v-for="(value, key) in teamParam.participants" :key="key" :employee="value" />
                 </div>
               </div>
             </section>
@@ -52,9 +50,12 @@
         </div>
       </form>
     </div>
+    <div v-if="teamParam.attendance_list !== undefined">
+      <p v-for="(item, index) in teamParam.attendance_list" :key="index"> {{item.name}} </p>
+    </div>
     <div class="w-87 d-flex mt-5 justify-content-end">
       <input type="submit" class="btn btn-outline-secondary m-1 shadow-sm" @click="$router.back()" value="Voltar"/>
-      <input type="submit" class="btn btn-outline-primary m-1 shadow-sm" @click.prevent="create" value="Registrar Turma"/>
+      <input type="submit" class="btn btn-outline-primary m-1 shadow-sm" @click.prevent="create()" value="Registrar Turma"/>
     </div>
   </div>
 </template>
@@ -62,6 +63,7 @@
 <script>
 import AllEmployees from '../_partials/AllEmployees.vue'
 import CardEmployee from './../_partials/CardUsersSelected.vue'
+import axios from '@/config/axios.js'
 
 export default {
   components: {
@@ -70,22 +72,39 @@ export default {
   },
   data () {
     return {
-      employessSelected: [],
-      employee: [
-        { name: 'Artenilson', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team1.jpg' },
-        { name: 'Astolfosanderson', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team2.jpg' }
-      ]
+      teamParam: {
+        training_name: 'parametro teste (front)',
+        instructor: 'parametro teste (front)',
+        category: 'parametro teste (front)',
+        realization: 'parametro teste (front)',
+        valid_until: 'parametro teste (front)',
+        participants: [],
+        attendance_list: undefined,
+        certificates: undefined
+      },
+      employee: this.$store.state.myTeam
     }
   },
   methods: {
     selectEmployee (employee) {
-      this.employessSelected.push(employee)
+      this.teamParam.participants.push(employee)
+    },
+    setCertifiedList () {
+      return (this.teamParam.attendance_list = this.$refs.certified.files)
     },
     create () {
-      return console.log(this.employessSelected)
+      // return console.log(this.teamParam.attendance_list[0].name)
+      // problemas em enviar vários arquivos
+      axios.request({
+        method: 'post',
+        url: '/team/register-team',
+        data: this.teamParam
+      }).then(
+        res => {
+          return console.log(res)
+        }
+      )
     }
-  },
-  created () {
   }
 }
 </script>

@@ -18,9 +18,7 @@ class AuthController extends Controller
     {
         if(Auth::attempt($this->request->only('email', 'password'))){
             session(['user_id' => auth()->user()->id]);
-            return response()->json([
-                'success' => 'logged with successful'
-            ]);
+            return response()->json(['success' => 'logged with successful', '_token' => '']);
         }
         return response()->json([
             'error' => 'user does not exists'

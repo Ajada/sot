@@ -1,6 +1,8 @@
   <template>
   <div id="app">
-    <MenuNav />
+    <div v-if="$store.state.jwtSession !== undefined && this.$route.path != '/login'">
+      <MenuNav />
+    </div>
     <transition name="slide" mode="out-in">
       <router-view />
     </transition>
@@ -8,7 +10,7 @@
 </template>
 
 <script>
-import MenuNav from '@/components/_partials/NavMenu.vue'
+import MenuNav from '@/components/_partials/nav/NavMenu.vue'
 
 export default ({
   components: {
@@ -18,8 +20,10 @@ export default ({
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 #app {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Poppins";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="container">
-      <h3 v-if="!trainings" class="font-weight-light text-grey p-2">
+      <h3 v-if="!$store.state.trainings" class="font-weight-light text-grey p-2">
         <i>
           Não existem treinamentos registrados
         </i>
@@ -31,14 +31,14 @@
           </tr>
         </thead>
       </table>
-      <TrainingList v-for="(item, index) in trainings" :key="index" :training="item" @modalOn="getDataTraining"/>
+      <TrainingList v-for="(item, index) in $store.state.trainings" :key="index" :training="item" @modalOn="getDataTraining"/>
     </div>
   </div>
 </template>
 
 <script>
 import TrainingList from '@/components/layouts/training/ListTraining.vue'
-import TrainingModal from '@/components/_partials/ModalCardTraining.vue'
+import TrainingModal from '@/components/_partials/modals/ModalCardTraining.vue'
 
 export default {
   components: {
@@ -47,25 +47,7 @@ export default {
   },
   data () {
     return {
-      trainingInformations: {},
-      trainings: [
-        {
-          id: 1,
-          name: 'Treinamento de escavadeira',
-          category: 'EAD',
-          type: 'Reciclagem',
-          workload: '8',
-          periodicity: '1'
-        },
-        {
-          id: 2,
-          name: 'Treinamento de empilhadeira',
-          category: 'Presencial',
-          type: 'Formação',
-          workload: '16',
-          periodicity: '1'
-        }
-      ]
+      trainingInformations: {}
     }
   },
   methods: {
