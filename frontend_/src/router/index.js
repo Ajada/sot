@@ -8,6 +8,10 @@ const routes = [
   {
     path: '/login',
     name: 'login-view',
+    beforeEnter: (to, from, next) => {
+      localStorage.clear()
+      next()
+    },
     component: () => import('@/views/LoginView.vue'),
     children: [
       {
@@ -32,6 +36,10 @@ const routes = [
     path: '/home',
     alias: '/',
     name: 'home',
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.__access) next({ name: 'login-view' })
+      next()
+    },
     component: () => import('../views/app/HomeView.vue')
   },
   {
@@ -62,6 +70,11 @@ const routes = [
     path: '/training/create',
     name: 'add-training',
     component: () => import('@/components/layouts/training/actions/AddNewTraining.vue')
+  },
+  /* LOGOUT AND 404 */
+  {
+    path: '/logout',
+    name: 'logout'
   }
 ]
 

@@ -16,7 +16,7 @@ class SetUserIdInRequest
      */
     public function handle(Request $request, Closure $next)
     {
-        $request['user_id'] = session('user_id');
+        $request['user_id'] = $request->header('user_id');
         return $next($request);
     }
 }

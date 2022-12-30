@@ -10,7 +10,7 @@ class UserIdScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        if(session()->has('user_id'))
-            $builder->where('user_id', session()->get('user_id'));
+        if(session('user_id'))
+            $builder->where('user_id', session('user_id'));
     }
 }

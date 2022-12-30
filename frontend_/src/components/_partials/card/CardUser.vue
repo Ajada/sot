@@ -1,10 +1,10 @@
 <template>
   <div class="col-lg-4 col-md-6 mb-4 pt-5">
     <div class="card shadow-sm border-0">
-      <button @click.prevent="sendEventCallModel" title="Detalhes do funcionario" class="btn rounded shadow-sm w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button @click.prevent="sendEventCallModel()" title="Detalhes do funcionario" class="btn rounded shadow-sm w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <div class="card-body cursos-pointer" style="cursor: pointer">
           <div class="user-picture">
-            <div class="image" :style="'background-image: url('+user.image+')'"></div>
+            <div class="image" :style="'background-image: url('+url+')'"></div>
           </div>
           <div class="user-content">
             <h5 class="text-capitalize user-name">{{ user.name }}</h5>
@@ -22,9 +22,14 @@ export default {
   props: {
     user: Object
   },
+  data () {
+    return {
+      url: process.env.VUE_APP_URL + '/storage/user_' + localStorage.getItem('__user') + '/images/' + this.user.photo
+    }
+  },
   methods: {
     sendEventCallModel () {
-      this.$emit('modalOn', this.user)
+      return this.$emit('modalOn', this.user)
     }
   }
 }
@@ -33,7 +38,9 @@ export default {
 <style scoped lang="scss">
 .cards{
   margin: 2px;
-  button{ }
+  button{
+    height: 20vh;
+  }
   .card {
     border-radius: 20px;
     min-height: 100%;

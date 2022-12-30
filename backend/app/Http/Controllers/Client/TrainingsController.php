@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\DB;
 class TrainingsController extends Controller
 {
     protected $training;
+    protected $request;
 
-    public function __construct(TrainingsModel $training)
+    public function __construct(TrainingsModel $training, Request $request)
     {
+        $this->request = $request;
         return $this->training = $training;
     }
 
@@ -23,7 +25,11 @@ class TrainingsController extends Controller
      */
     public function index()
     {
-        return response()->json($this->training->all());
+        return response()->json(
+            DB::table('trainings')
+                ->whereUserId($this->request->header('user_id'))
+                ->get()
+        );
     }
 
     /**
@@ -46,11 +52,11 @@ class TrainingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show($name, Request $request)
     {
         $collect = 
             DB::table('trainings')
-            ->whereUserId(session('user_id'))
+            ->whereUserId($request->header('user_id'))
             ->where('training_name', 'like', '%'.$name.'%')
             ->get();
 

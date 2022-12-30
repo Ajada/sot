@@ -12,41 +12,42 @@
         <div class="row mb-3">
           <div class="col mb-6">
             <label for="validationDefault01"><i>Nome do Treinamento:</i> </label>
-            <input type="text" class="form-control" style="text-align: center;" placeholder="Ponte rolante" required />
+            <input type="text" v-model="training.training_name" class="form-control input w-100" style="text-align: center;" placeholder="Ponte rolante" required />
           </div>
         </div>
 
         <div class="row">
           <div class="col mb-3">
             <label for="validationDefault01"><i>Tipo do Treinamento: </i></label>
-            <input type="text" class="form-control" placeholder="Formação" required />
+            <input type="text" v-model="training.type" class="form-control input" placeholder="Formação" required />
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault02"><i>Categoria: </i></label>
-            <input type="text" class="form-control justify-content-center" placeholder="Presencial" required />
+            <input type="text" v-model="training.category" class="form-control input justify-content-center" placeholder="Presencial" required />
           </div>
         </div>
 
         <div class="row">
           <div class="col mb-3">
             <label for="validationDefault01"><i>Carga Horária: </i></label>
-            <input type="text" class="form-control" placeholder="4 horas" required />
+            <input type="text" v-model="training.workload" class="form-control input" placeholder="4 horas" required />
           </div>
           <div class="col-md-6 mb-3">
-            <label for="validationDefault02"><i>Periodicidade: </i></label>
-            <input type="text" class="form-control" placeholder="1 ano" required />
+            <label for="validationDefault02"><i>Validade por ano: </i></label>
+            <input type="number" v-model="training.periodicity" class="form-control input" placeholder="2" required />
           </div>
         </div>
         <div class="mt-5 d-flex justify-content-end">
           <input
             type="submit"
-            class="btn btn-outline-secondary m-1 shadow-sm"
-            @click="$router.back()"
+            class="button m-1 shadow-sm"
+            @click.prevent="$router.back()"
             value="Voltar"
           />
           <input
             type="submit"
-            class="btn btn-outline-primary m-1 shadow-sm"
+            @click.prevent="newTraining"
+            class="button m-1 shadow-sm"
             value="Cadastrar"
           />
         </div>
@@ -56,8 +57,26 @@
 </template>
 
 <script>
-export default {
+import { mapActions } from 'vuex'
 
+export default {
+  data () {
+    return {
+      training: {
+        training_name: '',
+        type: '',
+        category: '',
+        workload: '',
+        periodicity: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['addTraining', 'getTrainings']),
+    newTraining () {
+      return this.addTraining(this.training)
+    }
+  }
 }
 </script>
 

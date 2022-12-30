@@ -1,38 +1,132 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from '@/axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    jwtSession: undefined,
-    myTeam: [
-      { id: 1, name: 'Fiona Ebert', function: 'Mestre de Obras', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team1.jpg' },
-      { id: 2, name: 'Albert Figman', function: 'Engenheiro', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team2.jpg' },
-      { id: 3, name: 'Paul Garden', function: 'Encarregado', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team3.jpg' },
-      { id: 4, name: 'Wesley Joe', function: 'Tecnico de Segurança', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team4.jpg' },
-      { id: 5, name: 'Joe Mcleen', function: 'Montador de Andaime', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team5.jpg' },
-      { id: 6, name: 'Crist Oracle', function: 'Montador de Andaime', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team6.jpg' },
-      { id: 7, name: 'Beth Willians', function: 'Tecnico de Segurança', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team7.jpg' },
-      { id: 8, name: 'Beth ', function: 'Tecnico de Segurança', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team8.jpg' },
-      { id: 9, name: 'Beth ', function: 'Aux. Montador de Andaime', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team9.jpg' },
-      { id: 10, name: 'Beth ', function: 'Aux. Montador de Andaime', image: 'https://www.alcoholandyouni.com/wp-content/uploads/2013/01/team10.jpg' }
-    ],
-    trainings: [
-      { id: 1, name: 'Treinamento de escavadeira', category: 'EAD', type: 'Reciclagem', workload: '8', periodicity: '1' },
-      { id: 2, name: 'Treinamento de empilhadeira', category: 'Presencial', type: 'Formação', workload: '16', periodicity: '1' }
-    ]
+    user_id: '',
+    myTeam: [],
+    trainings: []
   },
-  getters: {
-  },
+  getters: { },
   mutations: {
-    setJwtSession (state, payload) {
-      return (state.jwtSession = payload)
+    setMyTeam (state, payload) {
+      return (state.myTeam = payload)
+    },
+    setMyTrainings (state, payload) {
+      return (state.trainings = payload)
     }
   },
   actions: {
     auth (context, payload) {
-      context.commit('setJwtSession', payload)
+      axios.post('auth/login', payload)
+        .then(
+          res => {
+            if (res.data.error) {
+              return alert('Usuario não encontrado !') // message error
+            }
+            localStorage.__access = res.data._token
+            localStorage.__user = res.data.user_id
+            return (window.location.href = '/')
+          },
+          err => {
+            console.log(err)
+          }
+        )
+    },
+    logout () {
+      axios.get('auth/logout')
+      axios.request({
+        method: 'get',
+        url: 'auth/logout',
+        headers: {
+          user_id: localStorage.__user
+        }
+      })
+        .then(
+          res => {
+            return res.data.success ? (window.location.href = '/login') : ''
+          },
+          err => {
+            return console.log(err)
+          }
+        )
+    },
+    getEmployees (context, payload) {
+      axios.request({
+        method: 'GET',
+        url: 'app/employees/get-team',
+        headers: {
+          user_id: localStorage.__user
+        }
+      })
+        .then(
+          res => {
+            if (res.data.error) { return console.log(res.data.error) } // message error
+            return context.commit('setMyTeam', res.data)
+          },
+          err => {
+            console.log(err)
+          }
+        )
+    },
+    getTrainings (context, payload) {
+      axios.request({
+        method: 'GET',
+        url: 'app/training/get-all',
+        headers: {
+          user_id: localStorage.__user
+        }
+      })
+        .then(
+          res => {
+            if (res.data.error) { return console.log(res.data.error) } // message error
+            return context.commit('setMyTrainings', res.data)
+          },
+          err => {
+            return console.log(err)
+          }
+        )
+    },
+    addEmployee (context, payload) {
+      axios.request({
+        method: 'post',
+        url: 'app/employees/register-employee',
+        data: payload,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(
+          res => {
+            if (res.data.error) return alert('Algo deu errado ao adicionar funcionário')
+            return alert('Funcionário adicionado com sucesso !')
+          },
+          err => {
+            return console.log(err)
+          }
+        )
+    },
+    addTraining (context, payload) {
+      axios.request({
+        method: 'POST',
+        url: 'app/training/register',
+        data: payload,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(
+          res => {
+            if (res.data.error) return alert('Algo deu errado ao adicionar treinamento')
+            return alert('Treinamento adicionado com sucesso !')
+          },
+          err => {
+            return console.log(err)
+          }
+        )
     }
   },
   modules: {

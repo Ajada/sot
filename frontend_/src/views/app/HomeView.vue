@@ -9,8 +9,7 @@
         </i>
       </h3>
       <div class="ms-5">
-        <router-link class="btn btn-outline-primary mt-1 shadow-sm" :to="{ name: 'add-employee' }">
-          <i style="font-size: 20px; margin-right: 2px" class="fa-solid fa-user-plus"></i>
+        <router-link class="mt-1 shadow-sm button" :to="{ name: 'add-employee' }">
           Registrar
         </router-link>
       </div>
@@ -31,7 +30,7 @@
           </div>
         </div>
         <div class="col-auto">
-          <button type="submit" title="Buscar funcionario" class="btn btn-outline-primary mb-3 shadow-sm">
+          <button type="submit" title="Buscar funcionario" class="shadow-sm button">
             Buscar
           </button>
         </div>
@@ -49,6 +48,7 @@
         </section>
       </main>
     </div>
+    <!-- <button @click.prevent="getAll()">GET</button> -->
   </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
   methods: {
     showModal (UserSelected) {
       this.modalInformations = UserSelected
-      return this.modalInformations
+      return console.log(this.modalInformations)
     }
   }
 }
@@ -78,6 +78,7 @@ export default {
 
 <style lang="scss">
 .card-container{
+  z-index: 1;
   max-height: 65vh;
   overflow: auto;
 }

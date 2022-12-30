@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="justify-content-center w-100 d-flex">
-                <div class="image" :style="'background-image: url('+user.image+')'"></div>
+                <div class="image" :style="'background-image: url('+url+user.photo+')'"></div>
               </div>
               <div>
                 <h5> {{ user.name }} </h5>
@@ -28,7 +28,7 @@
                 <td class="w-10" scope="col">Status</td>
               </tr>
             </thead>
-            <tbody>
+            <tbody> <!-- for -->
               <tr>
                 <td class="w-25" scope="col">Treinamento de ponte Rolante</td>
                 <td class="w-25 col" scope="col">##/##/####</td>
@@ -76,6 +76,11 @@
 export default {
   props: {
     user: Object
+  },
+  data () {
+    return {
+      url: process.env.VUE_APP_URL + '/storage/user_' + localStorage.getItem('__user') + '/images/'
+    }
   }
 }
 </script>

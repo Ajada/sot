@@ -3,7 +3,7 @@
     <div class="card shadow-sm border-0">
       <div class="card-body cursos-pointer" style="cursor: pointer">
         <div class="user-picture">
-          <div class="image" :style="'background-image: url('+employee.image+')'"></div>
+          <div class="image" :style="'background-image: url('+url+employee.photo+')'"></div>
         </div>
         <div class="user-content text-start">
           <h5 class="text-capitalize user-name">{{ employee.name }} </h5>
@@ -17,6 +17,11 @@
 export default {
   props: {
     employee: Object
+  },
+  data () {
+    return {
+      url: process.env.VUE_APP_URL + '/storage/user_' + localStorage.getItem('__user') + '/images/'
+    }
   }
 }
 </script>

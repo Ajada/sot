@@ -1,79 +1,176 @@
 <template>
-  <nav class="navbar p-3 navbar-expand-lg bg-light text-dark shadow-sm">
-    <div class="container-fluid">
-      <button class="border-0 fs-2 text-dark navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span>
-          <i class="fa-solid fa-bars"></i>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse p-0" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link class="underlineHover nav-link" :to="{ name: 'home' }">
-              <i id="user-icon" class="fa-solid fa-house"></i>
-              Inicio
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="underlineHover nav-link" :to="{ name: 'team-group' }">
-              <i class="fa-solid fa-people-group"></i>
-              Turmas
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="underlineHover nav-link" :to="{ name: 'trainings-register' }">
-              <i class="fa-solid fa-chalkboard-user"></i>
-              Treinamentos
-            </router-link>
-          </li>
-        </ul>
+  <div>
+    <div class="header">
+      <div class="text-end p-3 text-white">
+        <button title="Sair" class="float" @click="exit()">
+          <i class="fa-solid fa-right-from-bracket mt-1 fs-4"></i>
+        </button>
       </div>
     </div>
-  </nav>
+    <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+    <label title="Abrir menu" for="openSidebarMenu" class="sidebarIconToggle">
+      <div class="spinner diagonal part-1"></div>
+      <div class="spinner horizontal"></div>
+      <div class="spinner diagonal part-2"></div>
+    </label>
+    <div id="sidebarMenu">
+      <ul class="sidebarMenuInner">
+        <router-link class="float nav-link" :to="{ name: 'home' }">
+          <li>
+            <i class="fa-solid fa-house"></i>
+            Inicio
+          </li>
+        </router-link>
+        <router-link class="float nav-link" :to="{ name: 'team-group' }">
+          <li>
+            <i class="fa-solid fa-people-group"></i>
+            Turmas
+          </li>
+        </router-link>
+        <router-link class="float nav-link" :to="{ name: 'trainings-register' }">
+          <li>
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Treinamentos
+          </li>
+        </router-link>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'MenuNav'
-}
-</script>
+import { mapActions } from 'vuex'
 
-<style scoped lang="scss">
-.bg-marine{
-  background-color: rgb(8, 8, 59);
-}
-.underlineHover{
-  &:after {
-    display: block;
-    left: 0;
-    bottom: -10px;
-    width: 0;
-    height: 2px;
-    background-color: #56baed;
-    content: "";
-    transition: width 0.2s;
-  }
-  &:hover {
-    color: #0d0d0d;
-    &:after{
-      width: 100%;
+export default {
+  name: 'MenuNav',
+  methods: {
+    ...mapActions(['logout']),
+    exit () {
+      return this.logout()
     }
   }
 }
-nav {
-  color: black;
-
-  a {
-    font-weight: normal;
-    color: rgb(0, 0, 0) !important;
-    text-decoration: none;
-    &.router-link-exact-active {
-      color: rgb(35, 57, 255) !important;
-      transition: 0.3s;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 3px;
-      text-shadow: -5px 5px 5px rgba(69, 69, 69, 0.344);
+</script>
+<style scoped lang="scss">
+button{
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+.header {
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: none;
+  background: linear-gradient(-20deg, #56baed 100%, #001ba2 50%);
+  position: fixed;
+  height: 60px!important;
+  overflow: hidden;
+  z-index: 10;
+}
+input[type=checkbox] {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  display: none;
+}
+input[type=checkbox]:checked {
+  ~ #sidebarMenu {
+    transform: translateX(0);
+  }
+  ~ .sidebarIconToggle > .horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    opacity: 0;
+  }
+  ~ .sidebarIconToggle > .diagonal.part-1 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(135deg);
+    margin-top: 8px;
+  }
+  ~ .sidebarIconToggle > .diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(-135deg);
+    margin-top: -9px;
+  }
+}
+.sidebarIconToggle {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: fixed;
+  z-index: 99;
+  top: 22px;
+  left: 15px;
+  height: 22px;
+  width:  22px;
+  .spinner {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background-color: #fff;
+  }
+  .horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+  }
+  .diagonal{}
+  .part-1 {
+    position: relative;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    float: left;
+  }
+  .part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+  }
+}
+#sidebarMenu {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  width: 250px;
+  margin-top: 60px;
+  transform: translateX(-250px);
+  transition: transform 250ms ease-in-out;
+  background: linear-gradient(20deg, #000e57 0%, #5872f9 100%);
+  background-image: url('./../../../assets/wolf-back.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 5px 5px 20px rgb(108, 108, 108);
+  z-index: 11;
+  .sidebarMenuInner{
+    margin:0;
+    padding:0;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    a{
+      list-style: none;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 20px;
+      cursor: pointer;
+      width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+      li{
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+      }
     }
   }
 }

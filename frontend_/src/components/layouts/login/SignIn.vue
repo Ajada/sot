@@ -13,7 +13,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import axios from '@/config/axios'
 
 export default {
   name: 'SignInComponent',
@@ -28,16 +27,7 @@ export default {
   methods: {
     ...mapActions(['auth']),
     login () {
-      axios.post('auth/login', this.param)
-        .then(
-          res => {
-            console.log(res)
-          },
-          err => {
-            console.log(err)
-          }
-        )
-      // return this.param.user === 'teste' && this.param.pass === '123' ? this.login('Token jwt ativo') : this.login(null)
+      return this.auth(this.param)
     }
   }
 }

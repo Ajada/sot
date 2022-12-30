@@ -9,8 +9,7 @@
         </i>
       </h3>
       <div class="ms-5">
-        <router-link class="btn btn-outline-primary mt-1 shadow-sm" :to="{ name: 'add-training' }">
-          <i style="font-size: 15px" class="fas fa-plus"></i>
+        <router-link class="button shadow-sm" :to="{ name: 'add-training' }">
           Adicionar
         </router-link>
       </div>

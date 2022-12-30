@@ -9,8 +9,8 @@
         </i>
       </h3>
       <div class="ms-5">
-        <router-link class="btn btn-outline-primary mt-1 shadow-sm" :to="{ name: 'add-team' }">
-          <i style="font-size: 20px; margin-right: 2px" class="fa-solid fa-users"></i>
+        <router-link class="button shadow-sm" :to="{ name: 'add-team' }">
+          <!-- <i style="font-size: 20px; margin-right: 2px" class="fa-solid fa-users"></i> -->
           Nova Turma
         </router-link>
       </div>

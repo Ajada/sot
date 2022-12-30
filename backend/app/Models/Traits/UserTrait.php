@@ -11,9 +11,9 @@ trait UserTrait
     {
         static::addGlobalScope(new UserIdScope);
 
-        if(session()->has('user_id')){
+        if(session('user_id')){
             static::creating(function ($model){
-                $model->user_id = session()->get('user_id');
+                $model->user_id = session('user_id');
             });
         }
     }

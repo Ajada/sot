@@ -14,46 +14,37 @@
       >
         <div class="row">
           <div class="col mb-3">
-            <label for="validationDefault01">Nome do Funcioanrio: </label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupPrepend2">
-                  <i class="fa-solid fa-user-tie p-1"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                id="validationDefault01"
-                placeholder="Multigas"
-                required
-              />
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="validationDefault02">CPF: </label>
+            <label for="validationDefault03">Nome do funcionario:</label>
             <input
               type="text"
-              class="form-control"
+              class="form-control input"
+              id="validationDefault01"
+              placeholder="Nome..."
+              v-model="employeeData.name"
+              required
+            />
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="validationDefault02">CPF/RG: </label>
+            <input
+              type="text"
+              class="form-control input"
               id="validationDefault02"
-              placeholder="KA000-00000"
+              placeholder="999-8..."
+              v-model="employeeData.cpf"
               required
             />
           </div>
           <div class="col-md-4 mb-3">
             <label for="validationDefaultUsername">Função: </label>
             <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupPrepend2"
-                  ><i class="fas fa-user p-1"></i
-                ></span>
-              </div>
               <input
                 type="text"
-                class="form-control"
+                class="form-control input"
                 id="validationDefaultUsername"
-                placeholder="X Solution"
+                placeholder="Aux..."
                 aria-describedby="inputGroupPrepend2"
+                v-model="employeeData.function"
                 required
               />
             </div>
@@ -65,7 +56,7 @@
             type="file"
             class="input-file"
             id="photo"
-            ref="employee_photo"
+            ref="file"
             @change="gocthaNameImage()"
           />
           <label
@@ -81,23 +72,25 @@
 
         <div class="form-row">
           <div class="col mb-3">
-            <label for="validationDefault03">Observações:</label>
+            <p style="margin-bottom: 2px" for="validationDefault03">Observações:</p>
             <textarea
-              class="form-control"
+              class="form-control input w-100"
               placeholder="Observações sobre o funcionario"
+              v-model="employeeData.observation"
             ></textarea>
           </div>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end ">
           <input
             type="submit"
-            class="btn btn-outline-secondary m-1 shadow-sm"
-            @click="$router.back()"
+            class="button"
+            @click.prevent="$router.back()"
             value="Voltar"
           />
           <input
             type="submit"
-            class="btn btn-outline-primary m-1 shadow-sm"
+            class="button"
+            @click.prevent="createEmployee()"
             value="Cadastrar"
           />
         </div>
@@ -107,6 +100,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -120,9 +115,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['addEmployee']),
+    createEmployee () {
+      return this.addEmployee(this.employeeData)
+    },
     gocthaNameImage () {
-      this.employeeData.photo = this.$refs.employee_photo.files[0]
-      return console.log(this.employeeData.photo)
+      return (this.employeeData.photo = this.$refs.file.files[0])
     }
   }
 }

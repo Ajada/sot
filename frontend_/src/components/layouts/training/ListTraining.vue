@@ -3,7 +3,7 @@
     <table class="table table-hover m-0">
       <tbody>
         <tr>
-          <td class="w-10 m-0" scope="col"> <i>{{ training.name }}</i> </td>
+          <td class="w-10 m-0" scope="col"> <i>{{ training.training_name }}</i> </td>
           <td class="w-10 m-0" scope="col"> <i>{{ training.category }}</i> </td>
           <td class="w-10 m-0" scope="col"> <i>{{ training.workload }}</i> horas </td>
           <td style="font-weight: 700; width: 8%;" class="text-white p-0 fw-bold">

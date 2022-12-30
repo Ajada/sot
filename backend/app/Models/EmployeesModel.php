@@ -21,4 +21,8 @@ class EmployeesModel extends Model
         'observation',
     ];   
 
+    protected $hidden = [
+        'user_id',
+    ];
+
 }
